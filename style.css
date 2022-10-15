@@ -31,6 +31,10 @@ section{
     padding: 0 80px;
     margin: auto;
 }
+/* There is faily lot of grouping in this, 
+It was getting really long 
+and nesting helped reduce it a by quite a lot
+Reference : https://www.w3schools.com/css/css_selectors.asp */
 .about, .table, .more, footer{
     font-family: 'Poppins', sans-serif;
 }
