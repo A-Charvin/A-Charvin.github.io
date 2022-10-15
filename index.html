@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website | GEOM-101</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<!-- NavigationBar Begins -->
+<!-- Navbar concept from w3 schools, using ID to refer to sections when clicked on them.
+Reference : https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp -->
+    <nav class="navbar">
+        <div class="max-width">
+            <div class="logo"><a href="#home">A.<span>Charvin</span></a></div>
+            <ul class="menu">
+                <li><a href="#home" class="menu-btn">Home</a></li>
+                <li><a href="#about" class="menu-btn">About</a></li>
+                <li><a href="#table" class="menu-btn">Education</a></li>
+                <li><a href="./more.html" class="menu-btn">More</a></li>
+            </ul>
+            <div class="menu-btn"></div>
+        </div>
+    </nav>
+<!-- NavigationBar Ends -->
+
+<!-- Home page inspiration came from https://dribbble.com/ujjol07 
+Tried to replicate that with a dark background and matching fonts.
+For this particular state that being, Ubuntu 
+(It has clear visual aid to differentiat the IiLl's and I love that)
+and poppins, It is a thin yet crisp font for some style here and there. -->
+
+<!-- The text will show up with h1-h4 tags while span helps to take it 
+    to CSS to give different colors to only portions of it. 
+    Referenced from Class week 2-6 -->
+
+<!-- HomeOption Begins -->
+    <section class="home" id="home">
+        <div class="max-width">
+            <div class="home-content">
+                <h2 class="h2">Hello, my name is</h2>
+                <h1 class="h1">Anand Charvin G</h1>
+                <h3 class="h3">And I'm a <span>GIS</span> Student</h3>
+                <h4 class="h4">At <span>Fleming College</span>, Lindsay, ON, Canada.</h4>
+                <a href="./more.html">More Info</a>
+            </div>
+        </div>
+    </section>
+<!-- HomeOption Ends -->
+
+<!-- About section was visualised as two part, with left showing an image
+and the right section showing some text, This was way harder to get right.
+Struggled with flex box and align commands for hours till this reached a
+somewhat presentable form as of now. Still not sure if this will hold.
+It is technically running on jenga mode. 
+Referenced from : https://www.w3schools.com/howto/howto_css_two_columns.asp -->
+
+<!-- AboutSection Begins -->
+<section class="about" id="about">
+    <div class="max-width">
+        <h2 class="title">About me</h2>
+        <div class="about-content">
+            <div class="column left">
+                <img src="./images/head.jpg" alt="">
+            </div>
+            <div class="column right">
+                <div class="text">I'm Anand Charvin G and I'm a GIS Student</div>
+                <p> I'm not sure what to put in here though, 
+                    due to that let's just take it as Ubuntu, 
+                    the same font which I'm using for the texts on this site, and it means</p>
+                    <p><b>"I am because we are".</b></p>
+                <a href="https://www.linkedin.com/in/anand-charvin-g-8311a822/" target="-blank">linkedin</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- AboutSection Ends -->
+
+<!-- Table block took way too much time on first attempt to properly implement, 
+    due to the nature of tables styling them was ok until aligning them to the page came up
+    that was a real struggle and in the end this is what it ended up as. I'm not fully happy with it, But
+    it works (somehow) and as long as it works. It is fine. (Still not aligned to center like How I was aiming to)
+Referenced from : 
+https://www.w3schools.com/css/css_table_style.asp
+https://www.w3schools.com/css/css_table_align.asp
+ -->
+
+<!-- Table block -->
+<section class="table" id="table">
+    <div class="max-width">
+        <div class="table-content">
+            <h2 class="title">Educational Qualifications</h2> 
+            <!-- Table -->
+				<table id="main-table">
+					<tr>
+					  <th>Degree</th>
+					  <th>Institution</th>
+
+					</tr>
+					<tr>
+					  <td>MA. Anthropology</td>
+					  <td>IGNOU</td>
+
+					</tr>
+					<tr>
+					  <td>PGD Environment & Sustainable Development</td>
+					  <td>IGNOU</td>
+
+					</tr>
+					<tr>
+					  <td>BSc. Forestry</td>
+					  <td>LPU-Punjab</td>
+
+					</tr>
+					<tr>
+					  <td>+2 Computer Science</td>
+					  <td>P.M.G.H.S.S</td>
+
+				  </tr>
+				</table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer was easy to implement, Since there is only text and URL to go with it.
+    Styling is on CSS and that is also a small portion, It gives it a bg, span and a hover effect.-->
+    
+<!-- FooterSection-->
+    <footer>
+        <span>Created By <a href="https://github.com/A-Charvin">Anand Charvin G</a> | <span>&copy</span> 2022 All rights reserved.</span>
+    </footer>
+
+</body>
+
+</html>
