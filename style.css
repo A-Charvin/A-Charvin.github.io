@@ -1,3 +1,8 @@
+/*  import google fonts | The default font implementation on the site was not working.
+This was shown during one of the classes, getting fonts from googlefonts and using them on the site. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+
 /* All element border, margin, padding and box size definitions.
 This will help the page to make use of the full area to display 
 the elements on it, defined for whole page*/
