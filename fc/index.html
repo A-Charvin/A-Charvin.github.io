@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Frontenac POI Spider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <script>
+  let map = L.map('map').setView([44.5, -76.5], 9);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  let initLoad = true;
+  let allPOIs;
+  let newPointLayer, newLineLayer;
+  let borderLayer;  // Keep the borderLayer reference
+
+  // Load POIs data
+  d3.json("./data/frontenac-pois.geojson", function(data) {
+    allPOIs = data;
+    getSpoke(allPOIs);
+
+    // Update POIs when map moves (but not when zooming!)
+    map.on('move', () => {
+      if (map.getZoom() <= 10) {  // Only update POIs on map move if zoom is not too high
+        getSpoke(allPOIs);
+      }
+    });
+  });
+
+  // Load the geojson for Frontenac County and Frontenac Islands
+  d3.json("./data/frontenac-borders.geojson", function(data) {
+    // Add the borders to the map only once
+    borderLayer = L.geoJSON(data, {
+      style: {
+        color: '#006400',   // Dark green for the border
+        weight: 3,          // Border width
+        opacity: 1,         // Full opacity for the border
+        fillOpacity: 0      // No fill, just the border
+      }
+    }).addTo(map);
+  });
+
+  // Calculate the nearest POIs to the map center
+  function getSpoke(pois) {
+    const center = map.getCenter();
+    const newPoint = turf.point([center.lng, center.lat]);
+    buildSpoke(pois, newPoint);
+  }
+
+  // Build the nearest POIs and lines
+  function buildSpoke(pois, point) {
+    let nearestPOIs = turf.featureCollection([]);
+    let nearestLines = turf.featureCollection([]);
+    let cleaned = JSON.parse(JSON.stringify(pois));
+
+    // Find the nearest POIs
+    for (let i = 1; i <= 8; i++) {
+      const nearest = turf.nearestPoint(point, cleaned);
+      const startLng = point.geometry.coordinates[0];
+      const endLng = nearest.geometry.coordinates[0];
+
+      if (startLng >= 90 && endLng <= -90) nearest.geometry.coordinates[0] += 360;
+      else if (startLng <= -90 && endLng >= 90) nearest.geometry.coordinates[0] -= 360;
+
+      const line = turf.lineString([point.geometry.coordinates, nearest.geometry.coordinates]);
+
+      nearestPOIs.features.push(nearest);
+      nearestLines.features.push(line);
+
+      const index = cleaned.features.findIndex(f => f.properties.osm_id === nearest.properties.osm_id);
+      if (index !== -1) cleaned.features.splice(index, 1);
+    }
+
+    // Update layers with the new data (without clearing existing POIs)
+    if (initLoad) {
+      addLayers(pois, nearestPOIs, nearestLines);
+    } else {
+      newPointLayer.clearLayers().addData(nearestPOIs);
+      newLineLayer.clearLayers().addData(nearestLines);
+    }
+  }
+
+  // Add layers to the map (only once)
+  function addLayers(allPoints, nearest, lines) {
+    initLoad = false;
+
+    // Add the POIs as circle markers
+    newPointLayer = L.geoJSON(allPoints, {
+      pointToLayer: (feature, latlng) => {
+        return L.circleMarker(latlng, {
+          radius: 3,
+          fillColor: "#a7a79b",
+          color: "#000",
+          weight: 0.5,
+          opacity: 1,
+          fillOpacity: 1
+        });
+      }
+    }).addTo(map);
+
+    // Add nearest POIs as circle markers
+    newPointLayer = L.geoJSON(nearest, {
+      pointToLayer: (feature, latlng) => {
+        return L.circleMarker(latlng, {
+          radius: 5,
+          fillColor: "#453c90",
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 1
+        });
+      }
+    }).addTo(map);
+
+    // Add lines connecting the map center to the nearest POIs
+    newLineLayer = L.geoJSON(lines, {
+      style: {
+        color: "#df0082",
+        weight: 2
+      }
+    }).addTo(map);
+  }
+  </script>
+</body>
+</html>
