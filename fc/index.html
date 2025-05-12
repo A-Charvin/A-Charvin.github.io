@@ -35,11 +35,9 @@
     getSpoke(allPOIs);
 
     // Update POIs when map moves (but not when zooming!)
-    map.on('move', () => {
-      if (map.getZoom() <= 10) {  // Only update POIs on map move if zoom is not too high
-        getSpoke(allPOIs);
-      }
-    });
+  map.on('move', () => {
+    getSpoke(allPOIs);
+  });
   });
 
   // Load the geojson for Frontenac County and Frontenac Islands
