@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mural Tour - North Frontenac</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    html,
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .selected-card {
+      border-color: #2563eb;
+      background-color: #f0f9ff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #map {
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="h-screen overflow-hidden bg-gray-50 text-gray-800">
+  <div class="flex flex-col md:flex-row h-full">
+    <!-- Map -->
+    <div id="map" class="w-full md:w-2/3 h-64 md:h-full z-0"></div>
+
+    <!-- Sidebar -->
+    <div
+      class="w-full md:w-1/3 h-full overflow-y-auto bg-white shadow-lg relative z-10 border-t md:border-t-0 md:border-l flex flex-col"
+    >
+      <div
+        class="sticky top-0 bg-white/90 backdrop-blur-md px-4 py-3 border-b z-10 flex flex-col"
+      >
+        <h1 class="text-xl font-bold text-gray-900">🎨 North Frontenac Murals</h1>
+        <p class="text-sm text-gray-500">Click a mural to explore</p>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Search by artist or title..."
+          class="mt-2 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+        />
+      </div>
+      <div
+        id="mural-list"
+        class="space-y-6 p-4 pb-16 flex-1 overflow-y-auto"
+      ></div>
+    </div>
+  </div>
+
+  <!-- Mural Detail Modal -->
+  <div
+    id="mural-detail"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50 px-4"
+  >
+    <div
+      class="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 relative flex flex-col"
+    >
+      <button
+        onclick="closeModal()"
+        class="absolute top-2 right-3 text-gray-400 hover:text-black text-xl"
+      >
+        &times;
+      </button>
+      <div id="mural-content" class="space-y-3 flex-grow overflow-auto">
+        <!-- Filled dynamically -->
+      </div>
+      <div class="mt-4 flex justify-between gap-3">
+        <button
+          id="prev-btn"
+          class="flex-1 min-w-[120px] border border-gray-300 rounded-md text-gray-700 py-2 font-semibold transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 select-none"
+        >
+          Previous
+        </button>
+        <button
+          id="next-btn"
+          class="flex-1 min-w-[120px] border border-gray-300 rounded-md text-gray-700 py-2 font-semibold transition-colors duration-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 select-none"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const muralURL =
+      "https://services2.arcgis.com/vJlmDE1PmdTcJF0N/arcgis/rest/services/Murals_North_Frontenac/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson";
+    const map = L.map("map").setView([44.75, -76.95], 10);
+
+    L.tileLayer(
+      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://openstreetmap.org/copyright">OSM</a>',
+        subdomains: "abcd",
+        maxZoom: 19,
+      }
+    ).addTo(map);
+
+    const muralListElem = document.getElementById("mural-list");
+    const searchInput = document.getElementById("search-input");
+    const muralDetail = document.getElementById("mural-detail");
+    const muralContent = document.getElementById("mural-content");
+    const nextBtn = document.getElementById("next-btn");
+    const prevBtn = document.getElementById("prev-btn");
+
+    let murals = [];
+    let filteredMurals = [];
+    let currentMuralIndex = -1;
+
+    function createMuralCard(mural, index) {
+      const card = document.createElement("div");
+      card.id = mural.id;
+      card.className =
+        "fade-in border border-gray-200 p-4 rounded-xl hover:shadow-md hover:scale-[1.01] transition transform duration-200 ease-in-out cursor-pointer bg-white";
+      card.innerHTML = `
+        <h2 class="text-lg font-semibold text-blue-800">${
+          mural.props.title || "Untitled"
+        }</h2>
+        <p class="text-sm text-gray-700 italic">${
+          mural.props.artist || "Unknown Artist"
+        }</p>
+        <p class="text-sm text-gray-500">${
+          mural.props.email || ""
+        } ${mural.props.phone ? " | " + mural.props.phone : ""}</p>
+        <p class="mt-2 text-sm">${mural.props.description || "No description available."}</p>
+        <p class="text-xs text-gray-400 mt-1">${mural.props.location || ""}</p>
+        ${
+          mural.props.Photo
+            ? `<img src="${mural.props.Photo}" loading="lazy" class="mt-2 rounded-xl shadow-sm max-h-48 w-full object-cover" />`
+            : ""
+        }
+      `;
+      card.addEventListener("click", () => {
+        currentMuralIndex = index;
+        highlightCard(mural.id);
+        map.setView([mural.lat, mural.lon], 14);
+        mural.marker.openPopup();
+        showMuralDetail(mural.props);
+        scrollToCard(mural.id);
+      });
+      return card;
+    }
+
+    function renderList(muralArray) {
+      muralListElem.innerHTML = "";
+      muralArray.forEach((mural, index) => {
+        const card = createMuralCard(mural, index);
+        muralListElem.appendChild(card);
+      });
+    }
+
+    function highlightCard(id) {
+      document.querySelectorAll("#mural-list > div").forEach((el) => {
+        el.classList.remove("selected-card");
+      });
+      if (id) {
+        const selected = document.getElementById(id);
+        if (selected) selected.classList.add("selected-card");
+      }
+    }
+
+    function scrollToCard(id) {
+      const card = document.getElementById(id);
+      if (card) card.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function showMuralDetail(props) {
+      muralContent.innerHTML = `
+        <h2 class="text-xl font-bold text-blue-900">${
+          props.title || "Untitled"
+        }</h2>
+        <p class="italic text-gray-700">${
+          props.artist || "Unknown Artist"
+        }</p>
+        ${
+          props.Photo
+            ? `<img src="${props.Photo}" alt="${props.title}" class="w-full rounded-xl mt-3 shadow-md object-cover max-h-64" />`
+            : ""
+        }
+        <p class="mt-3 text-gray-800">${props.description || "No description available."}</p>
+        <p class="mt-1 text-sm text-gray-500">${props.location || ""}</p>
+        <p class="mt-2 text-xs text-gray-400">Contact: ${
+          props.email || "N/A"
+        }${props.phone ? " | " + props.phone : ""}</p>
+      `;
+      muralDetail.classList.remove("hidden");
+      muralDetail.classList.add("visible");
+    }
+
+    function closeModal() {
+      muralDetail.classList.add("hidden");
+      muralDetail.classList.remove("visible");
+      currentMuralIndex = -1;
+      highlightCard(null);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (filteredMurals.length === 0) return;
+      currentMuralIndex = (currentMuralIndex + 1) % filteredMurals.length;
+      const mural = filteredMurals[currentMuralIndex];
+      highlightCard(mural.id);
+      map.setView([mural.lat, mural.lon], 14);
+      mural.marker.openPopup();
+      showMuralDetail(mural.props);
+      scrollToCard(mural.id);
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (filteredMurals.length === 0) return;
+      currentMuralIndex = (currentMuralIndex - 1 + filteredMurals.length) % filteredMurals.length;
+      const mural = filteredMurals[currentMuralIndex];
+      highlightCard(mural.id);
+      map.setView([mural.lat, mural.lon], 14);
+      mural.marker.openPopup();
+      showMuralDetail(mural.props);
+      scrollToCard(mural.id);
+    });
+
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.trim().toLowerCase();
+      filteredMurals = murals.filter(
+        ({ props }) =>
+          (props.title && props.title.toLowerCase().includes(term)) ||
+          (props.artist && props.artist.toLowerCase().includes(term))
+      );
+      renderList(filteredMurals);
+
+      if (filteredMurals.length > 0) {
+        currentMuralIndex = 0;
+        highlightCard(filteredMurals[0].id);
+        map.setView([filteredMurals[0].lat, filteredMurals[0].lon], 12);
+      } else {
+        currentMuralIndex = -1;
+      }
+
+      closeModal();
+    });
+
+    muralDetail.addEventListener("click", (e) => {
+      if (e.target === muralDetail) closeModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!muralDetail.classList.contains("visible")) return;
+
+      if (e.key === "ArrowRight") nextBtn.click();
+      if (e.key === "ArrowLeft") prevBtn.click();
+      if (e.key === "Escape") closeModal();
+    });
+
+    fetch(muralURL)
+      .then((res) => res.json())
+      .then((data) => {
+        murals = data.features.map((feature, index) => {
+          const props = feature.properties;
+          const [lon, lat] = feature.geometry.coordinates;
+          const id = `mural-${index}`;
+          const marker = L.marker([lat, lon]).addTo(map);
+          marker.bindPopup(`<strong>${props.title}</strong><br>${props.artist || ""}`);
+          marker.on("click", () => {
+            currentMuralIndex = filteredMurals.findIndex((m) => m.id === id);
+            highlightCard(id);
+            scrollToCard(id);
+            showMuralDetail(props);
+          });
+          return { id, props, lat, lon, marker };
+        });
+        filteredMurals = murals;
+        renderList(filteredMurals);
+      });
+  </script>
+</body>
+</html>
