@@ -1,52 +1,44 @@
-/*  import google fonts | The default font implementation on the site was not working.
-This was shown during one of the classes, getting fonts from googlefonts and using them on the site. */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
 
-
-/* All element border, margin, padding and box size definitions.
-This will help the page to make use of the full area to display 
-the elements on it, defined for whole page*/
-*{
+/* Basic element styling */
+* {
     box-sizing: border-box;
     text-decoration: none;
     margin: 0;
     padding: 0;
-
-    
-}
-/* Smooth Scrolling | Need's few more elements to test out it's function
-Reference : https://www.w3schools.com/howto/howto_css_smooth_scroll.asp#section2 */
-html{
-    scroll-behavior:smooth;
 }
 
-/* all similar type items styling portion. */
+html {
+    scroll-behavior: smooth;
+}
 
-/* Set the default padding for section and .m-width values.
-So that the texts and content does not stick to the edges 
-of the screen, this will let the content to leave a space 
-from the edges <- | | -> making it look good. */
-section{
+/* All sections' styling */
+section {
     padding: 100px 0;
 }
-.max-width{
+
+.max-width {
     max-width: 1300px;
     padding: 0 80px;
     margin: auto;
 }
-.about, .table, .more, footer{
+
+.about,
+.experience,
+footer {
     font-family: 'Poppins', sans-serif;
 }
+
 .about .about-content,
-.table .table-content
-{
+.experience .table-content {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
 }
-/* Sections titles defaulting with font and other properties*/
-section .title{
+
+/* Sections titles styling */
+section .title {
     position: relative;
     text-align: center;
     font-size: 40px;
@@ -55,10 +47,8 @@ section .title{
     padding-bottom: 20px;
     font-family: 'Ubuntu', sans-serif;
 }
-/* CSS before and after selector for styling out subtitle
-Reference : https://www.w3schools.com/cssref/sel_before.asp */
 
-section .title::before{
+section .title::before {
     content: "";
     position: absolute;
     bottom: 0px;
@@ -68,7 +58,8 @@ section .title::before{
     background: #111;
     transform: translateX(-50%);
 }
-section .title::after{
+
+section .title::after {
     position: absolute;
     bottom: -8px;
     left: 50%;
@@ -79,15 +70,16 @@ section .title::after{
     transform: translateX(-50%);
 }
 
-/* navbar styling 
-Sticky, m-width 
-menu list and hover and click styling.
-Reference : 
-https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
-- Not using JS for this site, 
-So navbar doesn't hide while scrolling down. :( */
+.about .title::after {
+    content: "Ubuntu";
+}
 
-.navbar{
+.experience .title::after {
+    content: "what I know";
+}
+
+/* Navbar styling */
+.navbar {
     position: fixed;
     width: 100%;
     z-index: 999;
@@ -96,39 +88,38 @@ So navbar doesn't hide while scrolling down. :( */
     transition: all 0.3s ease;
 }
 
-/* Reference : https://www.w3schools.com/howto/howto_js_navbar_sticky.asp 
-Stcky navigation bar,*/
-.navbar.sticky{
+.navbar.sticky {
     padding: 15px 0;
     background: rgb(33, 81, 237);
 }
-/* Keeps the Navbar items seperated yet centered */
-.navbar .max-width{
+
+.navbar .max-width {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-/* Color for the text in the navbar and the span with blue*/
-.navbar .logo a{
+
+.navbar .logo a {
     color: #fff;
     font-size: 35px;
     font-weight: 600;
 }
-/* Stylised portion of the logo/title text */
-.navbar .logo a span{
+
+.navbar .logo a span {
     color: rgb(33, 81, 237);
     transition: all 0.3s ease;
 }
-.navbar.sticky .logo a span{
+
+.navbar.sticky .logo a span {
     color: rgb(255, 252, 252);
 }
-/* navbar list list styling, 
-hover transition style from hover method referenced before */
-.navbar .menu li{
+
+.navbar .menu li {
     list-style: none;
     display: inline-block;
 }
-.navbar .menu li a{
+
+.navbar .menu li a {
     display: block;
     color: #fff;
     font-size: 18px;
@@ -136,24 +127,17 @@ hover transition style from hover method referenced before */
     margin-left: 25px;
     transition: color 0.3s ease;
 }
-.navbar .menu li a:hover{
+
+.navbar .menu li a:hover {
     color: rgb(33, 81, 237);
 }
-.navbar.sticky .menu li a:hover{
+
+.navbar.sticky .menu li a:hover {
     color: #fff;
 }
 
-/* menu button styling with border, hover, and round edge */
-.menu-btn{
-    color: #fff;
-    font-size: 23px;
-    cursor: pointer;
-    display: none;
-}
-
-/* Home section with background, 
-font family selection and other options. */
-.home{
+/* Home section styling */
+.home {
     display: flex;
     background: url("./images/banner.jpg") no-repeat center;
     height: 100vh;
@@ -162,57 +146,48 @@ font family selection and other options. */
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Ubuntu', sans-serif;
-}
-/* Maximum width for flex box inside home section */
-.home .max-width{
-  width: 100%;
-  display: flex;
-}
-.home .max-width .row{
-  margin-right: 0;
+    align-items: center;
 }
 
-/* font styling of H1 to H4 tags as well as span elements inside them
-   used in the main HTML body */
-
-.h1{
-    font-size: 75px;
-    font-weight: 600;
-    margin-left: -3px;
-    margin: 5px 0;
+.home .max-width {
+    width: 100%;
+    display: flex;
 }
-.h2{
+
+.home .home-content .home-title {
     font-size: 27px;
     font-weight: 400;
     margin: 5px 0;
 }
-.h3{
+
+.home .home-content .home-name {
+    font-size: 75px;
+    font-weight: 600;
+    margin: 5px 0;
+}
+
+.home .home-content .home-subtitle {
     font-size: 40px;
     margin: 5px 0;
 }
-.h3 span{
+
+.home .home-content .home-subtitle span {
     color: rgb(33, 81, 237);
     font-weight: 500;
     margin: 5px 0;
 }
-.h4{
+
+.home .home-content .home-location {
     font-size: 20px;
     margin: 5px 0;
 }
-.h4 span{
+
+.home .home-content .home-location span {
     color: rgb(22, 196, 91);
     font-weight: 200;
 }
 
-/* More Info Button styling, 
-It is inside the inside section and with an a tag.
-Thus this part will give it the shape with 
-margin, padding, a small border radius to give it a little round edge, 
-transition timer for hover switing effect from 
-blue to transparent with a border and text with the specified color. 
-References : https://www.w3schools.com/css/css3_buttons.asp */
-
-.home .home-content a{
+.home .home-content a {
     display: inline-block;
     background: rgb(33, 81, 237);
     color: #fff;
@@ -225,43 +200,37 @@ References : https://www.w3schools.com/css/css3_buttons.asp */
     transition: all 0.3s ease;
 }
 
-/* Hover switching trigger to no bg.
-Reference : https://www.w3schools.com/cssref/sel_hover.asp */
-
-.home .home-content a:hover{
+.home .home-content a:hover {
     color: rgb(33, 81, 237);
     background: none;
 }
 
-/* about section styling, Splitting into two sides to show text and image. */
-.about .title::after{
-    content: "Ubuntu";
-}
-/* Left width */
-.about .about-content .left{
+/* About section styling */
+.about .about-content .column {
     width: 45%;
 }
-/* Image fit and a border radius defined*/
-.about .about-content .left img{
+
+.about .about-content .left img {
+    width: 100%;
     object-fit: cover;
     border-radius: 10px;
 }
-/* Right width */
-.about .about-content .right{
+
+.about .about-content .right {
     width: 55%;
 }
-/* Right text properties */
-.about .about-content .right .text{
+
+.about .about-content .right .text {
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 10px;
 }
-/* Right paragraph properties */
-.about .about-content .right p{
+
+.about .about-content .right p {
     text-align: justify;
 }
-/* External Button property including hover and no bg effect */
-.about .about-content .right a{
+
+.about .about-content .right a {
     display: inline-block;
     background: rgb(33, 81, 237);
     color: #fff;
@@ -273,219 +242,138 @@ Reference : https://www.w3schools.com/cssref/sel_hover.asp */
     border: 2px solid rgb(33, 81, 237);
     transition: all 0.3s ease;
 }
-.about .about-content .right a:hover{
+
+.about .about-content .right a:hover {
     color: rgb(33, 81, 237);
     background: none;
 }
 
-/* Table with borders */
-/* Aligning the table and the titles 
-to the center was the most tedious of tasks which took time. 
-Reference : https://www.w3schools.com/css/css_table_style.asp*/
-
-.table{
-    color: #fff;
+/* Experience section styling */
+.experience {
     background-color: #111;
+    color: #fff;
 }
-.table .title::before{
+
+.experience .title::before {
     background: #fff;
 }
-.table .title::after{
+
+.experience .title::after {
     background: #111;
-    content: "what i know";
 }
-#main-table{
-    margin-left:auto;
-    margin-right:auto;
-    align-items: center;
-    text-align:center;
+
+#main-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
-.table {
-    border-collapse: separate;
-	width: 100%;
-    flex-wrap: wrap;
-    align-items: center;
-    text-align:center;
-    color: #fff;
-    background-color: #111;
+
+#main-table th,
+#main-table td {
+    text-align: left;
+    padding: 12px 15px;
 }
-  
-  th, td {
-    text-align: center;
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    padding-bottom: 10px;
+
+#main-table tr:nth-child(even) {
+    background-color: #282626;
 }
-  
-  tr:nth-child(even){background-color: #282626}
-  tr:hover {background-color: rgb(80, 240, 255);}
-  
-  th {
+
+#main-table tr:hover {
+    background-color: rgb(80, 240, 255);
+}
+
+#main-table th {
     background-color: rgb(20, 67, 220);
     color: white;
-}
-
-/* Portfolio page Image alignment and styling */
-.images {
-    display: flex;
-}
-
-.images2 {
-    padding-left: 25%;
-    padding-right: 25%;
-    display: flex;
-    justify-content: center;
-}
-
-/* Reference :
-Align multiple images :  https://www.w3schools.com/howto/howto_css_images_side_by_side.asp */
-.column {
-    flex: 50%;
-    padding: 5px;
-}
-/* More/portfolio section coloring and styling */
-.more .title::after{
-    content: "Some projects";
-}
-.more .more-content{
     text-align: center;
 }
 
-/* footer section properties, hover and click, background, text */
-footer{
+/* Footer styling */
+footer {
     background: #111;
     padding: 15px 23px;
     color: #fff;
     text-align: center;
 }
-footer span a{
+
+footer span a {
     color: rgb(33, 81, 237);
     text-decoration: none;
 }
-footer span a:hover{
+
+footer span a:hover {
     text-decoration: underline;
 }
 
-.more{
-    color: rgb(33, 81, 237);
-    color: #fff;
-    background-color: #111;
-    
-}
-
-/* responsive media queries to suit devices,
-References :
-https://www.w3schools.com/css/css_rwd_mediaqueries.asp
-https://www.geeksforgeeks.org/css3-media-query-for-all-devices/ 
-https://www.freecodecamp.org/news/media-query-css-example-max-and-min-screen-width-for-mobile-responsive-design/
-*/
-
-
-@media (max-width: 1104px) {
-    .about .about-content .left img{
-        height: 350px;
-        width: 350px;
-    }
-}
-
+/* Responsive media queries */
 @media (max-width: 991px) {
-    .max-width{
+    .max-width {
         padding: 0 50px;
     }
-}
-@media (max-width: 947px){
-    .menu-btn{
-        display: block;
-        z-index: 999;
+
+    .about .about-content .column,
+    .experience .table-content {
+        width: 100%;
     }
 
-    .navbar .menu{
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        left: -100%;
-        top: 0;
-        background: #111;
-        text-align: center;
-        padding-top: 80px;
-        transition: all 0.3s ease;
-    }
-    .navbar .menu.active{
-        left: 0;
-    }
-    .navbar .menu li{
-        display: block;
-    }
-    .navbar .menu li a{
-        display: inline-block;
-        margin: 20px 0;
-        font-size: 25px;
-    }
-    .home .home-content .h2{
-        font-size: 70px;
-    }
-    .home .home-content .h3{
-        font-size: 35px;
-    }
-    .home .home-content .h4{
-        font-size: 26px;
-    }
-    .home .home-content a{
-        font-size: 23px;
-        padding: 10px 30px;
-    }
-    .max-width{
-        max-width: 930px;
-    }
-    .about .about-content .column{
-        width: 100%;
-    }
-    .about .about-content .left{
+    .about .about-content .left {
         display: flex;
         justify-content: center;
         margin: 0 auto 60px;
     }
-    .about .about-content .right{
-        flex: 100%;
-    }
-    .table .table-content .column
-    {
-        width: 100%;
-        margin-bottom: 35px;
-    }
-}
 
-@media (max-width: 690px) {
-    .max-width{
-        padding: 0 23px;
+    .about .about-content .left img {
+        height: 350px;
+        width: 350px;
     }
-    .home .home-content .h2{
+
+    .about .about-content .right {
+        width: 100%;
+        text-align: center;
+    }
+
+    .home .home-content .home-name {
         font-size: 60px;
     }
-    .home .home-content .h3{
-        font-size: 32px;
+
+    .home .home-content .home-subtitle {
+        font-size: 30px;
     }
-    .home .home-content .h4{
-        font-size: 26px;
-    }
-    .home .home-content a{
+
+    .home .home-content .home-location {
         font-size: 20px;
     }
 }
 
-@media (max-width: 500px) {
-    .home .home-content .h2{
+@media (max-width: 768px) {
+    .navbar .menu {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .max-width {
+        padding: 0 23px;
+    }
+
+    .home .home-content .home-name {
         font-size: 50px;
     }
-    .home .home-content .h3{
-        font-size: 27px;
+
+    .home .home-content .home-subtitle {
+        font-size: 25px;
     }
-    .about .about-content .right .text,
-    .table .table-content .left .text{
-        font-size: 19px;
+
+    .home .home-content .home-location {
+        font-size: 18px;
     }
-    .column {
-        width: 100%;
+
+    .about .about-content .left img {
+        height: 300px;
+        width: 300px;
+    }
+
+    section .title {
+        font-size: 30px;
     }
 }
