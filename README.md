@@ -31,3 +31,11 @@ And to no surprise, It came out with an error. Not a bad one. Fixed that and pub
 Please make a commit and push the changes. It will greatly help me lean new things and to do things in a new prespective.
 
 Thank you!
+
+
+-------------------
+Updated 2026 | This project was long overdue for a refresh. A lot has changed since the original launch, especially with the explosion of new tools that make everything far easier than it used to be.
+
+With that in mind, I’ve updated the site to reflect where things stand now. Since this serves as the main hub, it made sense to bring it up to date in case someone wanders in and lands on the homepage.
+
+And if you did end up here - hello, and welcome!
