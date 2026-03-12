@@ -1,125 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anand Charvin G</title>
+    <title>Anand Charvin G | GIS Specialist & Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- NavigationBar Begins -->
-<!-- Navbar concept from w3 schools, using ID to refer to sections when clicked on them.
-Reference : https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp -->
+    <nav class="navbar">
+        <div class="max-width">
+            <div class="logo">A.<span>Charvin</span></div>
+            <ul class="nav-links">
+                <li><a href="#featured">Featured</a></li>
+                <li><a href="#gis">GIS Tools</a></li>
+                <li><a href="#creative">Creative</a></li>
+                <li><a href="#academic">Education</a></li>
+                <li><a href="https://www.linkedin.com/in/acharvin/" target="_blank" class="linkedin-cta">LinkedIn</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <header>
-        <nav class="navbar">
-            <div class="max-width">
-                <div class="logo"><a href="#home" aria-label="Go to Home section">A.<span>Charvin</span></a></div>
-                <ul class="menu">
-                    <li><a href="#home" class="menu-btn" aria-label="Go to Home section">Home</a></li>
-                    <li><a href="#about" class="menu-btn" aria-label="Go to About Me section">About</a></li>
-                    <li><a href="#experience" class="menu-btn" aria-label="Go to Work Experience section">Work</a></li>
-                    <li><a href="./more.html" class="menu-btn" aria-label="Go to More Info page">More</a></li>
-                </ul>
+    <header class="hero">
+        <div class="max-width">
+            <div class="hero-content">
+                <div class="team-badge">Part of the BeSpatial 2025 Small Org Award Winning Team</div>
+                <h1>Mapping Data.<br>Designing Stories.</h1>
+                <p class="hero-desc">GIS Specialist at the <strong>County of Frontenac</strong>. Developer of open-source spatial utilities and automated data pipelines.</p>
+                <div class="cta-group">
+                    <a href="#featured" class="btn-primary">View Featured Work</a>
+                    <a href="https://github.com/A-Charvin" target="_blank" class="btn-secondary">GitHub</a>
+                </div>
             </div>
-        </nav>
+        </div>
     </header>
-<!-- NavigationBar Ends -->
 
-<!-- Home page inspiration came from https://dribbble.com/ujjol07
-Tried to replicate that with a dark background and matching fonts.
-Using Ubuntu and Poppins for a clean, readable look. -->
-
-<!-- HomeSection Begins -->
-   <main>
-        <section class="home" id="home">
-            <div class="max-width">
-                <div class="home-content">
-                    <h2 class="home-title">Hello, my name is</h2>
-                    <h1 class="home-name">Anand Charvin G</h1>
-                    <h3 class="home-subtitle">And I'm a <span>GIS Specialist</span></h3>
-                    <h4 class="home-location">At the <span>County of Frontenac</span>, ON, Canada.</h4>
-                    <a href="./more.html">More Info</a>
-                </div>
-            </div>
-        </section>
-<!-- HomeSection Ends -->
-
-<!-- About section shows profile image on the left and a short intro on the right.
-Flexbox layout was challenging but rewarding. Still slightly unstable visually. -->
-
-<!-- AboutSection Begins -->
-        <section class="about" id="about">
-            <div class="max-width">
-                <h2 class="title">About me</h2>
-                <div class="about-content">
-                    <div class="column left">
-                        <img src="./images/head.jpg" alt="A profile picture of Anand Charvin G">
-                    </div>
-                    <div class="column right">
-                        <div class="text">I'm Anand Charvin G and I'm a GIS Specialist</div>
-                        <p>I believe in the concept of Ubuntu — the same font I'm using on this site — which means:</p>
-                        <p><b>"I am because we are".</b></p>
-                        <a href="https://www.linkedin.com/in/anand-charvin-g-8311a822/" target="_blank">LinkedIn</a>
+    <main class="max-width">
+        
+        <section id="featured" class="section">
+            <a href="https://github.com/A-Charvin/AGOL-Backup-Utility/" target="_blank" class="featured-card-link">
+                <div class="featured-card">
+                    <div class="badge">Featured Utility</div>
+                    <div class="f-content">
+                        <span class="sub-title">Flagship Open Source</span>
+                        <h2>AGOL Backup Utility</h2>
+                        <p>A comprehensive backup and restore utility for ArcGIS Online and Portal. Supports flexible formats, incremental scanning, and both GUI/CLI interfaces. A first in its field for open-source GIS administrative tools.</p>
+                        <span class="f-cta">Explore Repository <i data-feather="github"></i></span>
                     </div>
                 </div>
+            </a>
+        </section>
+
+        <section id="gis" class="section">
+            <div class="section-header">
+                <span class="sub-title">Geospatial Engineering</span>
+                <h2 class="title">Technical Portfolio</h2>
+            </div>
+            
+            <div class="grid">
+                <a href="https://github.com/A-Charvin/fc/tree/main/OCluster" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="share-2"></i></div>
+                    <h3>ArcGIS Content Galaxy</h3>
+                    <p>Extracts and visualizes dependencies between ArcGIS Portal items as an interactive, D3.js-powered content graph.</p>
+                </a>
+
+                <a href="https://github.com/A-Charvin/fc/tree/main/MarkingDetection" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="eye"></i></div>
+                    <h3>Road Marking Detection</h3>
+                    <p>YOLO-based detection and extraction workflows for road markings from high-res imagery.</p>
+                </a>
+
+                <a href="https://github.com/A-Charvin/Fishbone-QA-911/" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="check-circle"></i></div>
+                    <h3>Fishbone QA/QC</h3>
+                    <p>ArcGIS Pro geoprocessing script for validating civic address points against road segment address ranges.</p>
+                </a>
+
+                <a href="https://a-charvin.github.io/fc/CivicSearch.html" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="search"></i></div>
+                    <h3>Civic & Road Search</h3>
+                    <p>Advanced search for civic addresses and road segments with associated parity and detail views.</p>
+                </a>
+
+                <a href="https://github.com/A-Charvin/WinterWatch" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="truck"></i></div>
+                    <h3>WinterWatch</h3>
+                    <p>A simulated real-time snowplow tracking workflow and prototype demo using Deno and Leaflet.</p>
+                </a>
+
+                <a href="https://a-charvin.github.io/fc/StrongMayor/index.html" target="_blank" class="card">
+                    <div class="card-icon"><i data-feather="map"></i></div>
+                    <h3>Strong Mayor Mapping</h3>
+                    <p>Provincial data visualization mapping Ontario municipalities granted strong mayor powers.</p>
+                </a>
             </div>
         </section>
-<!-- AboutSection Ends -->
 
-<!-- Work Experience section replaces the older Education table.
-Table format retained for simplicity and readability.
-Still wish I could perfectly center this section. Maybe next iteration. -->
-
-<!-- ExperienceSection Begins -->
-        <section class="experience" id="experience">
-            <div class="max-width">
-                <div class="table-content">
-                    <h2 class="title">Work Experience</h2>
-                    <table id="main-table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Organization</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>GIS Specialist</td>
-                                <td>County of Frontenac</td>
-                            </tr>
-                            <tr>
-                                <td>GIS Technician</td>
-                                <td>Kawartha Conservation</td>
-                            </tr>
-                            <tr>
-                                <td>Student Tutor (GIS)</td>
-                                <td>Fleming College</td>
-                            </tr>
-                            <tr>
-                                <td>GIS Intern</td>
-                                <td>City of Peterborough</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <section id="academic" class="section">
+            <div class="section-header">
+                <span class="sub-title">Background</span>
+                <h2 class="title">Education & Awards</h2>
+            </div>
+            <div class="academic-grid">
+                <div class="academic-card">
+                    <span class="year">2025</span>
+                    <h3>BeSpatial Ontario Award</h3>
+                    <p>Small Org Team Category - County of Frontenac</p>
+                </div>
+                <div class="academic-card">
+                    <span class="year">2024</span>
+                    <h3>Big Data Analytics</h3>
+                    <p>Georgian College</p>
+                </div>
+                <div class="academic-card">
+                    <span class="year">2023</span>
+                    <h3>GIS Application Specialist</h3>
+                    <p>Fleming College</p>
                 </div>
             </div>
         </section>
     </main>
 
-<!-- ExperienceSection Ends -->
-
-<!-- Footer is simple, uses hover effects in CSS, and links to GitHub. -->
-
-<!-- FooterSection -->
     <footer>
-        <span>Created By <a href="https://github.com/A-Charvin" target="_blank">Anand Charvin G</a> | <span>&copy;</span> 2022 All rights reserved.</span>
+        <div class="max-width footer-inner">
+            <p>&copy; 2026 Anand Charvin G</p>
+            <div class="footer-socials">
+                <a href="https://github.com/A-Charvin"><i data-feather="github"></i></a>
+                <a href="https://www.linkedin.com/in/acharvin/"><i data-feather="linkedin"></i></a>
+            </div>
+        </div>
     </footer>
 
+    <script>feather.replace();</script>
 </body>
-
 </html>
-
